@@ -55,7 +55,7 @@ Most PHP file managers are built and tested exclusively on Linux + Apache/nginx.
 **Step 1 — Download and install dependencies**
 
 ```bash
-git clone https://github.com/your-username/WebFilesDesk.git
+git clone https://github.com/CaPusto/WebFilesDesk.git
 cd WebFilesDesk
 composer require scrivo/highlight.php
 ```
