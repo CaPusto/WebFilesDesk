@@ -1,0 +1,93 @@
+# ============================================================
+# WebFilesDesk — Apache configuration
+# ============================================================
+
+Options -Indexes
+ServerSignature Off
+
+# ============================================================
+# URL REWRITING — route all requests through index.php
+# ============================================================
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Allow direct access to existing files and directories
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Route everything else to index.php
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# ============================================================
+# SECURITY — block access to sensitive files and directories
+# ============================================================
+
+# Block access to config directory
+<IfModule mod_authz_core.c>
+    <DirectoryMatch "^(.*/)?config/">
+        Require all denied
+    </DirectoryMatch>
+    <DirectoryMatch "^(.*/)?vendor/">
+        Require all denied
+    </DirectoryMatch>
+</IfModule>
+
+# Block access to sensitive file types
+<FilesMatch "\.(ini|log|sh|sql|env|bak|swp|orig)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Block .htaccess itself from being read
+<Files ".htaccess">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</Files>
+
+# ============================================================
+# SECURITY HEADERS
+# ============================================================
+<IfModule mod_headers.c>
+    Header unset X-Powered-By
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# ============================================================
+# STATIC FILE CACHING
+# ============================================================
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css             "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+    ExpiresByType image/png            "access plus 30 days"
+    ExpiresByType image/jpeg           "access plus 30 days"
+    ExpiresByType image/gif            "access plus 30 days"
+    ExpiresByType image/svg+xml        "access plus 30 days"
+    ExpiresByType image/x-icon         "access plus 30 days"
+    ExpiresByType font/woff2           "access plus 30 days"
+</IfModule>
+
+# ============================================================
+# UPLOAD LIMIT — adjust to match conf.ini max_upload_size
+# Uncomment if PHP settings are managed via .htaccess
+# ============================================================
+# php_value upload_max_filesize 100M
+# php_value post_max_size 100M
+# php_value memory_limit 256M
+# php_value max_execution_time 300
+
+# ============================================================
+# CHARSET
+# ============================================================
+AddDefaultCharset UTF-8
