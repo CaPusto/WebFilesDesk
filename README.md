@@ -1,7 +1,7 @@
 # WebFilesDesk
 A lightweight, self-hosted web file manager built with PHP 8.5+. Browse, preview, upload, download, rename and delete files directly from your browser — no database required.
 
-Designed to work out of the box on **Windows Server + IIS** as well as Linux + nginx / Apache.
+Designed to work out of the box on **Windows Server + IIS** as well as Windows Server + nginx and Linux + nginx / Apache.
 
 ![PHP](https://img.shields.io/badge/PHP-8.5%2B-777BB4?logo=php&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green)
