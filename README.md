@@ -62,8 +62,15 @@ composer require scrivo/highlight.php
 
 **Step 2 — Configure**
 
+Run this command for linux system
+
 ```bash
 cp config/conf.ini.example config/conf.ini
+```
+or this command for windows system
+
+```cmd
+copy config\conf.ini.examle config\conf.ini
 ```
 
 Edit `config/conf.ini` — set the path to your files and the language:
